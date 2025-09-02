@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.ProductService.Exceptions.MandetoryFieldMissingException;
+import com.example.ProductService.Exceptions.MandatoryFieldMissingException;
 import com.example.ProductService.Exceptions.NotFoundException;
 import com.example.ProductService.Exceptions.ErrorMessage.ErrorMsg;
 
@@ -25,7 +25,7 @@ public class ExceptionHandelling {
 	}
 	
 	@ExceptionHandler
-	public ResponseEntity<ErrorMsg> mandetoryFieldValidation(MandetoryFieldMissingException exp){
+	public ResponseEntity<ErrorMsg> mandetoryFieldValidation(MandatoryFieldMissingException exp){
 		ErrorMsg err = new ErrorMsg();
 		err.setMsg(exp.getMessage());
 		err.setStatus(HttpStatus.BAD_REQUEST);

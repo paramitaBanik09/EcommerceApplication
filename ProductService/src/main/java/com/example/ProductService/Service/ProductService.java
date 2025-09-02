@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.ProductService.Entity.Category;
 import com.example.ProductService.Entity.Product;
-import com.example.ProductService.Exceptions.MandetoryFieldMissingException;
+import com.example.ProductService.Exceptions.MandatoryFieldMissingException;
 import com.example.ProductService.Exceptions.NotFoundException;
 import com.example.ProductService.Mapper.ProductMapper;
 import com.example.ProductService.Repository.CategoryRepository;
@@ -37,7 +37,7 @@ public class ProductService {
 
 			return ProductMapper.toProductTo(outputProd);
 		} else {
-			throw new MandetoryFieldMissingException("Category ID is a mandetory feild to create a product");
+			throw new MandatoryFieldMissingException("Category ID is a mandetory feild to create a product");
 		}
 	}
 	
