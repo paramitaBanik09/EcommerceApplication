@@ -2,6 +2,7 @@ package com.example.ProductService.Controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,5 +36,11 @@ public class ProductController {
 	@GetMapping("/ByidList")
 	public List<ProductTo> getListOfProductByIds(@RequestParam(value = "ids") List<Long> ids){
 		return prodService.getProductByIds(ids);
+	}
+	
+	@GetMapping("/search")
+	public Page<ProductTo> searchProductByNAme(@RequestParam(value="subString") String str, @RequestParam(value="page") int page,
+			@RequestParam(value="size") int size) {
+		return prodService.getProductByName(str, page, size);
 	}
 }

@@ -1,8 +1,14 @@
 package com.example.ProductService.Service;
 
+//import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+//import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.ProductService.Entity.Category;
@@ -59,5 +65,16 @@ public class ProductService {
 		}
 		
 		return productToList;
+	}
+	
+	public Page<ProductTo> getProductByName(String subStr,int page,int size){
+		PageRequest pageable = PageRequest.of(page, size);
+		Page<Product> prodList = productRepo.searchProductByName(subStr,pageable);
+		List<ProductTo> prodTo = new ArrayList<ProductTo>();
+		for(Product prod : prodList) {
+			prodTo.add(ProductMapper.toProductTo(prod));
+		}
+		Page<ProductTo> pageOfProd = new PageImpl<ProductTo>(prodTo);
+		return pageOfProd;
 	}
 }

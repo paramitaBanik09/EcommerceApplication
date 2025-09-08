@@ -3,13 +3,20 @@ package com.example.ProductService.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.ProductService.Entity.Category;
+import com.example.ProductService.Entity.Product;
 import com.example.ProductService.Exceptions.NotFoundException;
 import com.example.ProductService.Mapper.CategoryMapper;
+import com.example.ProductService.Mapper.ProductMapper;
 import com.example.ProductService.Repository.CategoryRepository;
 import com.example.ProductService.To.CategoryDto;
+import com.example.ProductService.To.ProductTo;
 
 @Service
 public class CategoryService {
@@ -40,5 +47,19 @@ public class CategoryService {
 	public CategoryDto getCategoryById(Long id) {
 		Category cat = categoryRepo.findById(id).orElseThrow(()-> new NotFoundException("Category not found with given ID " + id));
 		return CategoryMapper.toCategoryDto(cat);
+	}
+	
+	public Page<ProductTo> getListOfProductByCategoryInSortedOrder(Long id,int page,int size,String sort){
+		PageRequest pageable = PageRequest.of(page, size,(sort!=null&&sort.equalsIgnoreCase("DESC"))?Sort.by("p.name").descending():Sort.by("p.name").ascending()); //ASC, DESC;
+		Page<Product> prod = categoryRepo.getListOfProductByCategory(id, pageable);
+		List<ProductTo> prodListTo = new ArrayList<ProductTo>();
+		for(Product p : prod.getContent()) {
+			prodListTo.add(ProductMapper.toProductTo(p));
+		}
+		Page<ProductTo> prodTo = new PageImpl<ProductTo>(prodListTo);
+		/*if(catDto!=null) {
+			return catDto.getProductList();
+		}*/
+		return prodTo;
 	}
 }
