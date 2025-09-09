@@ -38,7 +38,7 @@ public class CategoryController {
 	
 	@GetMapping("/{id}/product")
 	public Page<ProductTo> getListOdProductByCategoryInSortedOrder(@PathVariable(name = "id") Long id,
-			@RequestParam(value="page") int page,@RequestParam(value="size") int size,@RequestParam(value="sort")String sort) {
-		return catService.getListOfProductByCategoryInSortedOrder(id,page,size,sort);
+			@RequestParam(value="page",required = true) int page,@RequestParam(value="size",required=true) int size,@RequestParam(value="sortingOrder", required = false)String sort,@RequestParam(value="field", required = false) String field) {
+		return catService.getListOfProductByCategoryInSortedOrder(id,page,size,sort,field);
 	}
 }
