@@ -60,8 +60,6 @@ public class CategoryService {
 		}
 		PageRequest pageable = PageRequest.of(page, size,(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("DESC"))?Sort.by("p."+field).descending():Sort.by("p."+field).ascending()); //ASC, DESC;
 		
-		
-		
 		Page<Product> prod = categoryRepo.getListOfProductByCategory(id, pageable);
 		List<ProductTo> prodListTo = new ArrayList<ProductTo>();
 		for(Product p : prod.getContent()) {
